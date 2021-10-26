@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./style.module.scss";
 
 const App = () => {
   const [todos, settodos] = useState([]);
@@ -42,15 +43,15 @@ const App = () => {
       <button onClick={isUpdate ? updateTodo : addNewTodo}>Submit</button>
 
       {todos.map((item, i) => (
-        <div key={i}>
+        <div className={styles.todoContainer} key={i}>
           {item}{" "}
-          <span onClick={() => deleteTodo(i)} style={{ cursor: "pointer" }}>
+          <span onClick={() => deleteTodo(i)} className={styles.pointer}>
             {" "}
             - delete
           </span>
           <span
             onClick={() => setUpdateInInput(item, i)}
-            style={{ cursor: "pointer" }}
+            className={styles.pointer}
           >
             {" "}
             - update
