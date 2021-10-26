@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+const App = () => {
+  const [todos, settodos] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [isUpdate, setisUpdate] = useState(false);
+  const [updateIndex, setUpdateIndex] = useState("");
+
+  const addNewTodo = () => {
+    settodos([...todos, inputText]);
+    setInputText("");
+  };
+
+  const deleteTodo = (val) => {
+    settodos(todos.filter((item, i) => i !== val));
+  };
+
+  const updateTodo = () => {
+    const allTodos = [...todos];
+
+    allTodos[updateIndex] = inputText;
+
+    settodos(allTodos);
+
+    setInputText("");
+    setUpdateInInput("");
+  };
+
+  const setUpdateInInput = (val, index) => {
+    setisUpdate(true);
+    setInputText(val);
+    setUpdateIndex(index);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+        placeholder={"enter tod here"}
+      />
+      <button onClick={isUpdate ? updateTodo : addNewTodo}>Submit</button>
+
+      {todos.map((item, i) => (
+        <div key={i}>
+          {item}{" "}
+          <span onClick={() => deleteTodo(i)} style={{ cursor: "pointer" }}>
+            {" "}
+            - delete
+          </span>
+          <span
+            onClick={() => setUpdateInInput(item, i)}
+            style={{ cursor: "pointer" }}
+          >
+            {" "}
+            - update
+          </span>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default App;
